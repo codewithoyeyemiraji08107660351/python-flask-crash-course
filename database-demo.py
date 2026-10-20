@@ -117,6 +117,9 @@ class Student(db.Model):
             app.logger.error(f"Error deleting student: {e}")
             return jsonify({"error": "Unable to delete student"}), 500
 
+# Demo function
+    def demo():
+        pass
 
     def to_response(self):
         return {
