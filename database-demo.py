@@ -1,13 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask  import Flask, request, jsonify
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///student.db'
 db = SQLAlchemy(app)
 
 class Student(db.Model):
-    id = db.Column(db.Integer, prmary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=True)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=True, unique=True)
@@ -67,7 +66,7 @@ class Student(db.Model):
         students = Student.query.order_by(Student.id).all()
         return jsonify([student.to_response() for student in students])
 
-    @app.route("/student/<str:reg_no>", methods=["GET"])
+    @app.route("/student/<string:reg_no>", methods=["GET"])
     def get_student(reg_no):
         student = Student.query.filter_by(reg_no=reg_no).first()
         if not student:
@@ -137,4 +136,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    app.app_context
+    app.run(debug=True)
